@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 class User{
@@ -35,23 +36,28 @@ class Note{
     }
 };
 int main(){
-    User user1("Piyush","piyushb@gmail.com");
-    Note note1("C++","A programming");
+    const int numOfData = 3;
+    User user[numOfData] ={
+        User("Piyush","piyushb@gmail.com"),
+        User("Rutuj","rutuj@gmail.com"),
+        User("Danny","dan@gmail.com")
+    };
 
-    User user2("Rutuj","Rutuj@gmail.com");
-    Note note2("DBMS","Database Management System");
+    Note note[numOfData] ={
+        Note("C++","A programming"),
+        Note("DBMS","Database Management System"),
+        Note("HTML","Web Development Language")
+    };
 
-    user1.print();
-    note1.print();
-    std::cout<<endl;
-    user2.print();
-    note2.print();
+    user[0].changeUsername("Piyush123");
+    note[0].changeTopic("Python");
 
-    user1.changeUsername("Piyush123");
-    note1.changeTopic("Python");
-
-    std::cout<<endl;
-    user1.print();
-    note1.print();
-   return 0; 
+    for (int i=0;i<numOfData;i++){
+        user[i].print();
+        note[i].print();
+        std::cout<<endl;
+    };
+    return 0; 
 }
+
+
