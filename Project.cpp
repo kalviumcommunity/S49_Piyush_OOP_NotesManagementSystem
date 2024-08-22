@@ -6,8 +6,8 @@ class User{
     string Username;
     string Email;
     User(string username,string email){
-        Username = username;
-        Email = email;
+        this->Username = username;
+        this->Email = email;
     }
     void print(){
         std::cout<<"Username - "<<Username<<endl;
@@ -23,8 +23,8 @@ class Note{
     string TopicName;
     string NoteContent;
     Note(string topic, string noteContent){ 
-        TopicName = topic;
-        NoteContent = noteContent; 
+        this->TopicName = topic;
+        this->NoteContent = noteContent; 
     }
     void print(){
         std::cout<<"Topic - "<<TopicName<<endl;
