@@ -14,7 +14,7 @@ class User{
         std::cout<<"Email - "<<Email<<endl;
     }
     void changeUsername(string newUsername){
-        Username = newUsername;
+        this->Username = newUsername;
     }
 };
 
@@ -31,7 +31,7 @@ class Note{
         std::cout<<"NoteContent - "<<NoteContent<<endl;
     }
     void changeTopic(string newTopic){
-        TopicName = newTopic;
+        this->TopicName = newTopic;
     }
 };
 int main(){
