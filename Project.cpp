@@ -36,27 +36,39 @@ class Note{
     }
 };
 int main(){
+    std::cout<<"New data is being added below:-"<<endl;
+    std::cout<<endl;
+
     const int numOfData = 3;
-    User user[numOfData] ={
-        User("Piyush","piyushb@gmail.com"),
-        User("Rutuj","rutuj@gmail.com"),
-        User("Danny","dan@gmail.com")
-    };
+    User* userData[numOfData];
+    Note* noteData[numOfData];
 
-    Note note[numOfData] ={
-        Note("C++","A programming"),
-        Note("DBMS","Database Management System"),
-        Note("HTML","Web Development Language")
-    };
+    string usernames[]={"Piyush","Rutuj","Danny"};
+    string emails[]={"piyushb@gmail.com","rutuj@gmail.com","dan@gmail.com"};
+    string topics[]={"C++","DBMS","HTML"};
+    string noteContents[]={"A programming","Database Management System","Web Development Language"};
 
-    user[0].changeUsername("Piyush123");
-    note[0].changeTopic("Python");
 
-    for (int i=0;i<numOfData;i++){
-        user[i].print();
-        note[i].print();
+    for(int i=0;i<numOfData;i++){
+        userData[i]=new User(usernames[i],emails[i]);
+        noteData[i]=new Note(topics[i],noteContents[i]);
+    }
+
+    userData[0]->changeUsername("Piyush123");
+    noteData[0]->changeTopic("Python");
+
+    for (int i=0;i<numOfData-1;i++){
+        userData[i]->print();
+        noteData[i]->print();
         std::cout<<endl;
     };
+
+    for (int i=0;i<numOfData-1;i++){
+        delete userData[i];
+        delete noteData[i];
+    };
+
+    std::cout<<"All data has been deleted";
     return 0; 
 }
 
