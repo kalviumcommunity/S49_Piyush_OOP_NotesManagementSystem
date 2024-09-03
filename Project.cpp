@@ -22,6 +22,9 @@ class User{
     void changeUsername(string newUsername){
         this->Username = newUsername;
     }
+    static void userCountPrint(){
+        std::cout<<"Number of users: "<<numOfUsers-1<<endl; 
+    }
 };
 
 int User::numOfUsers = 1;
@@ -36,6 +39,7 @@ class Note{
         this->TopicName = topic;
         this->NoteContent = noteContent; 
         this->noteId = numOfNotes;
+        numOfNotes++;
     }
     void print(){
         std::cout<<"Topic - "<<TopicName<<endl;
@@ -43,6 +47,9 @@ class Note{
     }
     void changeTopic(string newTopic){
         this->TopicName = newTopic;
+    }
+    static void notesCountPrint(){
+        std::cout<<"Number of notes: "<<numOfNotes-1<<endl; 
     }
 };
 
@@ -80,6 +87,11 @@ int main(){
         delete userData[i];
         delete noteData[i];
     };
+
+    std::cout<<"Summmary of all Data - "<<endl;
+    User::userCountPrint();
+    Note::notesCountPrint();
+    std::cout<<endl;
 
     std::cout<<"All data has been deleted";
     return 0; 
