@@ -6,11 +6,16 @@ class User{
     public:
     string Username;
     string Email;
+    int userId;
+    static int numOfUsers;
     User(string username,string email){
         this->Username = username;
         this->Email = email;
+        this->userId = numOfUsers;
+        numOfUsers++;
     }
     void print(){
+        std::cout<<"User "<<userId<<endl;
         std::cout<<"Username - "<<Username<<endl;
         std::cout<<"Email - "<<Email<<endl;
     }
@@ -19,13 +24,18 @@ class User{
     }
 };
 
+int User::numOfUsers = 1;
+
 class Note{
     public:
     string TopicName;
     string NoteContent;
+    int noteId;
+    static int numOfNotes;
     Note(string topic, string noteContent){ 
         this->TopicName = topic;
         this->NoteContent = noteContent; 
+        this->noteId = numOfNotes;
     }
     void print(){
         std::cout<<"Topic - "<<TopicName<<endl;
@@ -35,6 +45,9 @@ class Note{
         this->TopicName = newTopic;
     }
 };
+
+int Note::numOfNotes = 1;
+
 int main(){
     std::cout<<"New data is being added below:-"<<endl;
     std::cout<<endl;
@@ -57,13 +70,13 @@ int main(){
     userData[0]->changeUsername("Piyush123");
     noteData[0]->changeTopic("Python");
 
-    for (int i=0;i<numOfData-1;i++){
+    for (int i=0;i<numOfData;i++){
         userData[i]->print();
         noteData[i]->print();
         std::cout<<endl;
     };
 
-    for (int i=0;i<numOfData-1;i++){
+    for (int i=0;i<numOfData;i++){
         delete userData[i];
         delete noteData[i];
     };
