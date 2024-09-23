@@ -3,17 +3,33 @@
 using namespace std;
 
 class User{
-    public:
+    private:
     string Username;
     string Email;
     int userId;
     static int numOfUsers;
+
+    public:
     User(string username,string email){
         this->Username = username;
         this->Email = email;
-        this->userId = numOfUsers;
         numOfUsers++;
+        this->userId = numOfUsers;
     }
+
+    string getUsername(){
+        return Username;
+    }
+    string getEmail(){
+        return Email;
+    }
+    void setUsername(string newUsername){
+        this->Username = newUsername;
+    }
+    void setEmail(string newEmail){
+        this->Email = newEmail;
+    }
+
     void print(){
         std::cout<<"User "<<userId<<endl;
         std::cout<<"Username - "<<Username<<endl;
@@ -23,24 +39,40 @@ class User{
         this->Username = newUsername;
     }
     static void userCountPrint(){
-        std::cout<<"Number of users: "<<numOfUsers-1<<endl; 
+        std::cout<<"Number of users: "<<numOfUsers<<endl; 
     }
 };
 
-int User::numOfUsers = 1;
+int User::numOfUsers = 0;
 
 class Note{
-    public:
+    private:
     string TopicName;
     string NoteContent;
     int noteId;
     static int numOfNotes;
+
+    public:
     Note(string topic, string noteContent){ 
         this->TopicName = topic;
-        this->NoteContent = noteContent; 
+        this->NoteContent = noteContent;
+        numOfNotes++; 
         this->noteId = numOfNotes;
-        numOfNotes++;
     }
+
+    string getTopicName(){
+        return TopicName;
+    }
+    string getNoteContent(){
+        return NoteContent;
+    }
+    void setTopicName(string newTopicname){
+        this->TopicName = newTopicname;
+    }
+    void setNoteContent(string newNoteContent){
+        this->NoteContent = newNoteContent;
+    }
+
     void print(){
         std::cout<<"Topic - "<<TopicName<<endl;
         std::cout<<"NoteContent - "<<NoteContent<<endl;
@@ -49,11 +81,11 @@ class Note{
         this->TopicName = newTopic;
     }
     static void notesCountPrint(){
-        std::cout<<"Number of notes: "<<numOfNotes-1<<endl; 
+        std::cout<<"Number of notes: "<<numOfNotes<<endl; 
     }
 };
 
-int Note::numOfNotes = 1;
+int Note::numOfNotes = 0;
 
 int main(){
     std::cout<<"New data is being added below:-"<<endl;
