@@ -2,7 +2,16 @@
 #include <string>
 using namespace std;
 
-class User{
+class abstractUser{
+    public:
+    virtual string getUsername() const = 0;
+    virtual string getEmail() const = 0;
+    virtual void setUsername(string newUsername) = 0;
+    virtual void setEmail(string newEmail) = 0;
+    virtual void print() const = 0;
+};
+
+class User:public abstractUser{
     private:
     string Username;
     string Email;
@@ -17,10 +26,10 @@ class User{
         this->userId = numOfUsers;
     }
 
-    string getUsername(){
+    string getUsername() const{
         return Username;
     }
-    string getEmail(){
+    string getEmail() const{
         return Email;
     }
     void setUsername(string newUsername){
@@ -30,13 +39,10 @@ class User{
         this->Email = newEmail;
     }
 
-    void print(){
+    void print() const{
         std::cout<<"User "<<userId<<endl;
         std::cout<<"Username - "<<Username<<endl;
         std::cout<<"Email - "<<Email<<endl;
-    }
-    void changeUsername(string newUsername){
-        this->Username = newUsername;
     }
     static void userCountPrint(){
         std::cout<<"Number of users: "<<numOfUsers<<endl; 
@@ -45,7 +51,16 @@ class User{
 
 int User::numOfUsers = 0;
 
-class Note{
+class abstractNote {
+    public:
+    virtual string getTopicName() const = 0;
+    virtual string getNoteContent() const = 0;
+    virtual void setTopicName(string newTopicName) = 0;
+    virtual void setNoteContent(string newNoteContent) = 0;
+    virtual void print() const = 0;
+};
+
+class Note:public abstractNote{
     private:
     string TopicName;
     string NoteContent;
@@ -60,10 +75,10 @@ class Note{
         this->noteId = numOfNotes;
     }
 
-    string getTopicName(){
+    string getTopicName() const{
         return TopicName;
     }
-    string getNoteContent(){
+    string getNoteContent() const{
         return NoteContent;
     }
     void setTopicName(string newTopicname){
@@ -73,12 +88,9 @@ class Note{
         this->NoteContent = newNoteContent;
     }
 
-    void print(){
+    void print() const{
         std::cout<<"Topic - "<<TopicName<<endl;
         std::cout<<"NoteContent - "<<NoteContent<<endl;
-    }
-    void changeTopic(string newTopic){
-        this->TopicName = newTopic;
     }
     static void notesCountPrint(){
         std::cout<<"Number of notes: "<<numOfNotes<<endl; 
@@ -92,22 +104,21 @@ int main(){
     std::cout<<endl;
 
     const int numOfData = 3;
-    User* userData[numOfData];
-    Note* noteData[numOfData];
+    abstractUser* userData[numOfData];
+    abstractNote* noteData[numOfData];
 
     string usernames[]={"Piyush","Rutuj","Danny"};
     string emails[]={"piyushb@gmail.com","rutuj@gmail.com","dan@gmail.com"};
     string topics[]={"C++","DBMS","HTML"};
     string noteContents[]={"A programming","Database Management System","Web Development Language"};
 
-
-    for(int i=0;i<numOfData;i++){
-        userData[i]=new User(usernames[i],emails[i]);
-        noteData[i]=new Note(topics[i],noteContents[i]);
+    for (int i = 0; i < numOfData; i++) {
+        userData[i] = new User(usernames[i], emails[i]);
+        noteData[i] = new Note(topics[i], noteContents[i]);
     }
 
-    userData[0]->changeUsername("Piyush123");
-    noteData[0]->changeTopic("Python");
+    userData[0]->setUsername("Piyush123");
+    noteData[0]->setTopicName("Python");
 
     for (int i=0;i<numOfData;i++){
         userData[i]->print();
