@@ -9,6 +9,7 @@ class abstractUser{
     virtual void setUsername(string newUsername) = 0;
     virtual void setEmail(string newEmail) = 0;
     virtual void print() const = 0;
+    virtual ~abstractUser(){};
 };
 
 class User:public abstractUser{
@@ -24,6 +25,9 @@ class User:public abstractUser{
         this->Email = email;
         numOfUsers++;
         this->userId = numOfUsers;
+    }
+    ~User(){
+        std::cout<<Username<<" deleted successfully."<<endl; 
     }
 
     string getUsername() const{
@@ -58,6 +62,7 @@ class abstractNote {
     virtual void setTopicName(string newTopicName) = 0;
     virtual void setNoteContent(string newNoteContent) = 0;
     virtual void print() const = 0;
+    virtual ~abstractNote(){};
 };
 
 class Note:public abstractNote{
@@ -73,6 +78,9 @@ class Note:public abstractNote{
         this->NoteContent = noteContent;
         numOfNotes++; 
         this->noteId = numOfNotes;
+    }
+    ~Note(){
+        std::cout<<TopicName<<" notes deleted successfully."<<endl<<endl; 
     }
 
     string getTopicName() const{
@@ -125,18 +133,20 @@ int main(){
         noteData[i]->print();
         std::cout<<endl;
     };
-
+    std::cout<<"Starting Deleting Process..."<<endl<<endl;
     for (int i=0;i<numOfData;i++){
         delete userData[i];
         delete noteData[i];
     };
+    std::cout<<"All data deleted Successfully..."<<endl;
 
+    std::cout<<endl;
     std::cout<<"Summmary of all Data - "<<endl;
     User::userCountPrint();
     Note::notesCountPrint();
     std::cout<<endl;
-
-    std::cout<<"All data has been deleted";
+    
+    
     return 0; 
 }
 
