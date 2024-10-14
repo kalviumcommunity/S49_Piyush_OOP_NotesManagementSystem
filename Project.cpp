@@ -9,6 +9,7 @@ class abstractUser{
     virtual void setUsername(string newUsername) = 0;
     virtual void setEmail(string newEmail) = 0;
     virtual void print() const = 0;
+    virtual void printPermissions() const = 0;
     virtual ~abstractUser(){};
 };
 
@@ -48,6 +49,9 @@ class User:public abstractUser{
         std::cout<<"Username - "<<Username<<endl;
         std::cout<<"Email - "<<Email<<endl;
     }
+
+    void printPermissions() const {}
+
     static void userCountPrint(){
         std::cout<<"Number of users: "<<numOfUsers<<endl; 
     }
@@ -124,6 +128,13 @@ class Roles: public User{
     void printRole() const{
         std::cout<<"Role - "<<role<<endl;
     }
+    void printPermissions() const override{
+        if (role=="Admin"){
+            std::cout<<"Admin's privilages - Update , Delete , Create and Read."<<endl;
+        } else if (role=="User"){
+            std::cout<<"User's privilages - Create and Read."<<endl;
+        }
+    }
     void print() const{
         User::print();
         printRole();
@@ -141,7 +152,7 @@ int main(){
     string usernames[]={"Piyush","Rutuj","Danny"};
     string emails[]={"piyushb@gmail.com","rutuj@gmail.com","dan@gmail.com"};
     string topics[]={"C++","DBMS","HTML"};
-    string noteContents[]={"A programming","Database Management System","Web Development Language"};
+    string noteContents[]={"A programming Language","Database Management System","Web Development Language"};
 
     userData[0] = new Roles(usernames[0],emails[0],"Admin");
     for (int i = 1; i < numOfData; i++) {
@@ -156,6 +167,7 @@ int main(){
 
     for (int i=0;i<numOfData;i++){
         userData[i]->print();
+        userData[i]->printPermissions();
         noteData[i]->print();
         std::cout<<endl;
     };
