@@ -107,6 +107,29 @@ class Note:public abstractNote{
 
 int Note::numOfNotes = 0;
 
+class Roles: public User{
+    private:
+    string role;
+
+    public:
+    Roles(string s,string e,string r):User(s,e){
+        this->role = r;
+    }    
+    void setRole(string r){
+        this->role = r;
+    } 
+    string getRole() const{
+        return role;
+    }
+    void printRole() const{
+        std::cout<<"Role - "<<role<<endl;
+    }
+    void print() const{
+        User::print();
+        printRole();
+    }
+};
+
 int main(){
     std::cout<<"New data is being added below:-"<<endl;
     std::cout<<endl;
@@ -120,8 +143,11 @@ int main(){
     string topics[]={"C++","DBMS","HTML"};
     string noteContents[]={"A programming","Database Management System","Web Development Language"};
 
-    for (int i = 0; i < numOfData; i++) {
-        userData[i] = new User(usernames[i], emails[i]);
+    userData[0] = new Roles(usernames[0],emails[0],"Admin");
+    for (int i = 1; i < numOfData; i++) {
+        userData[i] = new Roles(usernames[i], emails[i],"User");
+    }
+    for (int i = 0; i < numOfData; i++){
         noteData[i] = new Note(topics[i], noteContents[i]);
     }
 
