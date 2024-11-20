@@ -1,15 +1,15 @@
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 class abstractUser{
     public:
     virtual string getUsername() const = 0;
     virtual string getEmail() const = 0;
+    virtual int getUserId() const = 0;
     virtual void setUsername(string newUsername) = 0;
     virtual void setEmail(string newEmail) = 0;
-    virtual void print() const = 0;
-    virtual void printPermissions() const = 0;
     virtual ~abstractUser(){};
 };
 
@@ -37,21 +37,15 @@ class User:public abstractUser{
     string getEmail() const{
         return Email;
     }
+    int getUserId() const{
+        return userId;
+    }
     void setUsername(string newUsername){
         this->Username = newUsername;
     }
     void setEmail(string newEmail){
         this->Email = newEmail;
     }
-
-    void print() const{
-        std::cout<<"User "<<userId<<endl;
-        std::cout<<"Username - "<<Username<<endl;
-        std::cout<<"Email - "<<Email<<endl;
-    }
-
-    void printPermissions() const {}
-
     static void userCountPrint(){
         std::cout<<"Number of users: "<<numOfUsers<<endl; 
     }
@@ -65,7 +59,6 @@ class abstractNote {
     virtual string getNoteContent() const = 0;
     virtual void setTopicName(string newTopicName) = 0;
     virtual void setNoteContent(string newNoteContent) = 0;
-    virtual void print() const = 0;
     virtual ~abstractNote(){};
 };
 
@@ -99,11 +92,6 @@ class Note:public abstractNote{
     void setNoteContent(string newNoteContent){
         this->NoteContent = newNoteContent;
     }
-
-    void print() const{
-        std::cout<<"Topic - "<<TopicName<<endl;
-        std::cout<<"NoteContent - "<<NoteContent<<endl;
-    }
     static void notesCountPrint(){
         std::cout<<"Number of notes: "<<numOfNotes<<endl; 
     }
@@ -125,20 +113,31 @@ class Roles: public User{
     string getRole() const{
         return role;
     }
-    void printRole() const{
-        std::cout<<"Role - "<<role<<endl;
-    }
-    void printPermissions() const override{
+    void printPermissions() const{
         if (role=="Admin"){
             std::cout<<"Admin's privilages - Update , Delete , Create and Read."<<endl;
         } else if (role=="User"){
             std::cout<<"User's privilages - Create and Read."<<endl;
         }
     }
-    void print() const{
-        User::print();
-        printRole();
+};
+
+class Printer{
+    public:
+    static void printUserData(const User& u) {
+        std::cout<<"User ID: "<<u.getUserId()<<endl;
+        std::cout<<"Username: "<<u.getUsername()<<endl;
+        std::cout<<"Email: "<<u.getEmail()<<endl;
     }
+
+    static void printNoteData(const Note& n) {
+        std::cout<<"Topic: "<<n.getTopicName()<<endl;
+        std::cout<<"Note Content: "<<n.getNoteContent()<<endl;
+    }
+
+    static void printRoleData(const Roles& r){
+        std::cout<<"Role: "<<r.getRole()<<endl;
+    } 
 };
 
 int main(){
@@ -165,12 +164,18 @@ int main(){
     userData[0]->setUsername("Piyush123");
     noteData[0]->setTopicName("Python");
 
-    for (int i=0;i<numOfData;i++){
-        userData[i]->print();
-        userData[i]->printPermissions();
-        noteData[i]->print();
-        std::cout<<endl;
+    for (int i = 0; i < numOfData; i++) {
+        Roles* role = dynamic_cast<Roles*>(userData[i]); 
+        
+        Printer::printUserData(*role); 
+        Printer::printRoleData(*role);
+        role->printPermissions();
+
+        Note* note = dynamic_cast<Note*>(noteData[i]); 
+        Printer::printNoteData(*note); 
+        std::cout << endl;
     };
+
     std::cout<<"Starting Deleting Process..."<<endl<<endl;
     for (int i=0;i<numOfData;i++){
         delete userData[i];
