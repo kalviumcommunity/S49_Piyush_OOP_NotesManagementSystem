@@ -99,26 +99,48 @@ class Note:public abstractNote{
 
 int Note::numOfNotes = 0;
 
+class abstractRole{
+    public:
+    virtual string getRole() const = 0;
+    virtual void printPermissions() const = 0;
+    virtual ~abstractRole(){};
+};
+
+class adminRole:public abstractRole{
+    public:
+    string getRole() const override{
+        return "Admin";
+    }
+    void printPermissions() const override{
+        std::cout<<"Admin's privilages - Update , Delete , Create and Read."<<endl;
+    }
+};
+
+class userRole:public abstractRole{
+    public:
+    string getRole() const override{
+        return "User";
+    }
+    void printPermissions() const override{
+        std::cout<<"User's privilages - Create and Read."<<endl;
+    }
+};
+
+
 class Roles: public User{
     private:
-    string role;
+    abstractRole* role;
 
     public:
-    Roles(string s,string e,string r):User(s,e){
-        this->role = r;
+    Roles(string s,string e,abstractRole* r):User(s,e),role(r){}
+    ~Roles(){
+        delete role;
     }    
-    void setRole(string r){
-        this->role = r;
-    } 
-    string getRole() const{
-        return role;
+    string getRole() const {
+        return role->getRole();
     }
     void printPermissions() const{
-        if (role=="Admin"){
-            std::cout<<"Admin's privilages - Update , Delete , Create and Read."<<endl;
-        } else if (role=="User"){
-            std::cout<<"User's privilages - Create and Read."<<endl;
-        }
+        role->printPermissions();
     }
 };
 
@@ -153,9 +175,9 @@ int main(){
     string topics[]={"C++","DBMS","HTML"};
     string noteContents[]={"A programming Language","Database Management System","Web Development Language"};
 
-    userData[0] = new Roles(usernames[0],emails[0],"Admin");
+    userData[0] = new Roles(usernames[0],emails[0],new adminRole());
     for (int i = 1; i < numOfData; i++) {
-        userData[i] = new Roles(usernames[i], emails[i],"User");
+        userData[i] = new Roles(usernames[i], emails[i],new userRole());
     }
     for (int i = 0; i < numOfData; i++){
         noteData[i] = new Note(topics[i], noteContents[i]);
@@ -171,7 +193,7 @@ int main(){
         Printer::printRoleData(*role);
         role->printPermissions();
 
-        Note* note = dynamic_cast<Note*>(noteData[i]); 
+        Note* note = dynamic_cast<Note*>(noteData[i]);
         Printer::printNoteData(*note); 
         std::cout << endl;
     };
