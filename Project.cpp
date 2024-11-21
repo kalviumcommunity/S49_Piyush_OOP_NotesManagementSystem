@@ -144,19 +144,25 @@ class Roles: public User{
     }
 };
 
-class Printer{
+class userPrinter{
     public:
     static void printUserData(const User& u) {
         std::cout<<"User ID: "<<u.getUserId()<<endl;
         std::cout<<"Username: "<<u.getUsername()<<endl;
         std::cout<<"Email: "<<u.getEmail()<<endl;
     }
+};
 
+class notesPrinter{
+    public:
     static void printNoteData(const Note& n) {
         std::cout<<"Topic: "<<n.getTopicName()<<endl;
         std::cout<<"Note Content: "<<n.getNoteContent()<<endl;
     }
+};
 
+class rolePrinter{
+    public:
     static void printRoleData(const Roles& r){
         std::cout<<"Role: "<<r.getRole()<<endl;
     } 
@@ -189,12 +195,12 @@ int main(){
     for (int i = 0; i < numOfData; i++) {
         Roles* role = dynamic_cast<Roles*>(userData[i]); 
         
-        Printer::printUserData(*role); 
-        Printer::printRoleData(*role);
+        userPrinter::printUserData(*role); 
+        rolePrinter::printRoleData(*role);
         role->printPermissions();
 
         Note* note = dynamic_cast<Note*>(noteData[i]);
-        Printer::printNoteData(*note); 
+        notesPrinter::printNoteData(*note); 
         std::cout << endl;
     };
 
